@@ -1,0 +1,63 @@
+body{
+    margin: 0;
+    min-height: 80vh;
+    background-color: #00161b;
+    color: #960505;
+
+    display: grid;
+
+    place-items: center;
+}
+
+input, button{
+    height: 45px;
+
+    font-size: 20px;
+    padding: 5px 10px;
+}
+
+button {
+    height: 40px;
+
+    font-weight: 600;
+}
+
+.calculadora{
+    display: grid;
+
+    gap: 30px;
+}
+
+.icone-apagar{
+    width: 40px;
+}
+
+.tela-resultado{
+    border: none;
+    border-radius: 10px;
+}
+
+.grid-teclado{
+    display: grid;
+
+    /*grid-template-columns: 1fr 1fr 1fr 1fr;*/
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 5px;
+}
+
+.grid-teclado > button {
+    height: 40px;
+
+    border: none; /*desabilita a borda*/
+border-radius: 5px;
+
+}
+
+.grid-teclado > .grid-btn-adicionar{
+    grid-row: 4 / 6;
+    grid-column: 4;
+
+    height: 100%;
+}
