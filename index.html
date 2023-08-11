@@ -1,44 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculadora</title>
 
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div class="calculadora">
-        <input class="tela-resultado" type="text">
-        
-        <div class="grid-teclado">
-            <button>CE</button>
-            <button><img class="icone-apagar" src="backspace_FILL0_wght400_GRAD0_opsz48.png" height="35"></button>
-            <button>%</button>
-            <button>/</button>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="calculadora">
+            <input class="tela-resultado" type="text" id="campoTexto" >
             
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button>*</button>
+            <div class="grid-teclado">
+                <button>CE</button>
+                <button><img class="icone-apagar" src="backspace_FILL0_wght400_GRAD0_opsz48.png" height="35"></button>
+                <button>%</button>
+                <button>/</button>
+                
+                <button>7</button>
+                <button>8</button>
+                <button>9</button>
+                <button>*</button>
 
-            <button>6</button>
-            <button>5</button>
-            <button>4</button>
-            <button>-</button>
-            
-            <button class="grid-btn-adicionar"> + </button>
-            <button>3</button>
-            <button>2</button>
-            <button>1</button>
+                <button>6</button>
+                <button>5</button>
+                <button>4</button>
+                <button>-</button>
+                
+                <button class="grid-btn-adicionar">+</button>
+                <button>3</button>
+                <button>2</button>
+                <button>1</button>
 
-            <button>0</button>
-            <button>.</button>
-            <button>=</button>
-            
+                <button>0</button>
+                <button>.</button>
+                <button>=</button>
+                
+            </div>
         </div>
-    </div>
 
-    
-</body>
+        <div>
+            <script>
+                let n1 = 0, n2 = 0, total = 0, operador;
+                let auxN1 = " ", auxN2= " ";
+                let temOperador = false;
+                var campoTexto = document.getElementById("campoTexto");
+
+                function realizacaoCalculo(){
+                    switch(operador){
+                        case "+":
+                            total = n1 + n2;
+                            break;
+
+                        case "-":
+                            total = n1 - n2;
+                            break;
+
+                        case "/":
+                            total = n1 / n2;
+                            break;
+
+                        case "*":
+                            total = n1 * n2;
+                            break;
+
+                        case "%":
+                            total = n1 % n2;
+                            break;
+                    }
+
+                    campoTexto.value = campoTexto.value + total;
+                }
+
+                function verificadorDeNumero(temOperador, botaoTexto){
+                    let numTexto = botaoTexto;
+
+                    if(temOperador == false){
+                        auxN1 = auxN1 + botaoTexto;
+                        n1 = parseFloat(auxN1);
+                        campoTexto.value = campoTexto.value + numTexto;
+                    }
+                    else if(temOperador == true && n1 != null){
+                        auxN2 = auxN2 + botaoTexto;
+                        n2 = parseFloat(auxN2);
+                        campoTexto.value = campoTexto.value + numTexto;
+                    }
+                }
+
+                function verificadorBotoes(botao) {
+                    let botaoTexto = botao.target.textContent;
+
+                    if(botaoTexto == "." || botaoTexto == "+" || botaoTexto == "-" || botaoTexto == "/" || botaoTexto == "*" || botaoTexto == "=" || botaoTexto == "%" || botaoTexto == "CE"){
+                        
+                        if(botaoTexto == "."){
+                            campoTexto.value = "n1 = " + n1 + " --- n2 = " + n2;
+                        }
+
+                        if(botaoTexto == "CE"){
+                            campoTexto.value = "";
+                            operador = "";
+                            temOperador = false;
+                            n1 = 0;
+                            n2 = 0;
+                            auxN1 = "";
+                            auxN2 = "";
+                        }
+                        else{
+                            if(botaoTexto == "="){
+                                campoTexto.value = campoTexto.value + " " + botaoTexto + " ";
+                                realizacaoCalculo();
+                            }
+                            else{
+                                temOperador = true;
+                                operador = botaoTexto;
+                                campoTexto.value = campoTexto.value + " " + operador + " ";
+                            }
+                        }
+                    }
+                    else{
+                        verificadorDeNumero(temOperador, botaoTexto);
+                    }
+                }
+
+                const botoes = document.querySelectorAll(".grid-teclado");
+
+                botoes.forEach(function(botao) {
+                    botao.addEventListener("click", verificadorBotoes);
+                });
+
+            </script>
+        </div>
+    </body>
 </html>
